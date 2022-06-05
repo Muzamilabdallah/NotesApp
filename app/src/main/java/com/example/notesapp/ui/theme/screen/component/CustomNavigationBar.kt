@@ -15,20 +15,28 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import com.example.notesapp.domain.BarItems
+import com.example.notesapp.ui.theme.screen.NavGraphs
 import com.example.notesapp.ui.theme.screen.Routes
+import com.example.notesapp.ui.theme.screen.appCurrentDestinationAsState
+import com.example.notesapp.ui.theme.screen.startAppDestination
+import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
 
 @Composable
 fun CustomNavigationBar(
-    navController: NavHostController,
-    items: List<Routes>,
-    currentScreenId: String,
-    onItemSelected: (Routes) -> Unit
-) {
+    navController: NavController,
+
+    ) {
+    var currentDestination: DirectionDestinationSpec? =
+        (navController.appCurrentDestinationAsState().value
+            ?: NavGraphs.root.startAppDestination) as DirectionDestinationSpec?
+
     Row(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -37,20 +45,32 @@ fun CustomNavigationBar(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = CenterVertically
     ) {
-        items.forEach { item ->
-            BottomNavigationItems(item, isItemSelected = item.id == currentScreenId) {
-                onItemSelected(item)
-                navController.navigate(item.id) {
+        Routes.values().forEach { item ->
+            BottomNavigationItems(item, isItemSelected = currentDestination == item.direction) {
+                navController.navigate(item.direction) {
                     popUpTo(navController.graph.findStartDestination().id) {
                         saveState = true
                     }
                     launchSingleTop = true
                     restoreState = true
+//                    val navigationRoutes = Routes.values()
+//                    val firstBottomBarDestination = navController.backQueue
+//                        .firstOrNull {navBackStackEntry -> checkForDestinations(navigationRoutes, navBackStackEntry) }
+//                        ?.destination
+//                    // so only the currently selected screen remains in the stack
+//                    if (firstBottomBarDestination != null) {
+//                        popUpTo(firstBottomBarDestination.id) {
+//                            inclusive = true
+//                            saveState = true
+//                        }
+//                    }
+
+
                 }
-            }
             }
         }
     }
+}
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -70,7 +90,7 @@ fun BottomNavigationItems(
             .clip(CircleShape)
             .background(backround)
             .padding(8.dp)
-             .clickable(onClick = onClick),
+            .clickable(onClick = onClick),
 
         ) {
 
@@ -91,7 +111,7 @@ fun BottomNavigationItems(
 
             AnimatedVisibility(visible = isItemSelected) {
                 Text(
-                    text = item.title,
+                    text = stringResource(id = item.label),
                     color = contentColor
                 )
             }
@@ -102,8 +122,21 @@ fun BottomNavigationItems(
 }
 
 
+fun checkForDestinations(
+navigationRoutes: Array<Routes>,
+navBackStackEntry: NavBackStackEntry
+): Boolean {
+    navigationRoutes.forEach {
+        if (it.direction.route == navBackStackEntry.destination.route){
+            return  true
+        }
+
+    }
+    return false
+}
+
 @Composable
-fun prev(){
+fun prev() {
 
 }
 

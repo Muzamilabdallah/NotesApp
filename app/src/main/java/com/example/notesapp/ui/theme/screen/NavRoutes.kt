@@ -1,19 +1,26 @@
 package com.example.notesapp.ui.theme.screen
 
 import android.media.Image
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.notesapp.R
+import com.example.notesapp.ui.theme.screen.destinations.HomeScreenDestination
+import com.example.notesapp.ui.theme.screen.destinations.SearchDestination
+import com.example.notesapp.ui.theme.screen.destinations.SettingDestination
+import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
-sealed class Routes(
-    val id: String,val title:String,val icon:ImageVector
-
+enum class Routes(
+    val direction: DirectionDestinationSpec,
+    @StringRes val label: Int,
+    val icon: ImageVector,
 ) {
-    object Home : Routes(id = "home", "Home", Icons.Outlined.Home)
-    object Search : Routes(id = "search", "Search", Icons.Outlined.Search)
-    object Setting : Routes(id = "setting", "Setting", Icons.Outlined.Settings)
-    object bottomItems { val items = listOf( Home,  Search,Setting) }
+    Home(HomeScreenDestination, R.string.home, Icons.Outlined.Home),
+    Search(SearchDestination, R.string.search, Icons.Outlined.Search),
+    Setting(SettingDestination, R.string.setting, Icons.Outlined.Settings)
+//    object bottomItems { val items = listOf( Home,  Search,Setting) }
 
 }
