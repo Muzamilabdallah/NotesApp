@@ -21,6 +21,9 @@ jobs:
           java-version: 11
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
+      - name: upload test report
+      - path: app/build/reports/tests/testDebugUnitTest/
+      
 
   apk:
     name: Generate APK
