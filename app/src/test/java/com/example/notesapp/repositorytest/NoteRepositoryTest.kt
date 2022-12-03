@@ -22,7 +22,7 @@ class NoteRepositoryTest {
 
     @Test
     fun insertNote() = runBlocking {
-        val note = Note(id = 1, title = "title", content = "cotent")
+        val note = Note(id = 1, title = "title", content = "content")
         repostory.insertNote(note = note)
         val notes = repostory.getAllNotes()
         assertThat(notes).contains(note)
