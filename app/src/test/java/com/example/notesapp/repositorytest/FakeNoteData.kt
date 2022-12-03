@@ -2,7 +2,7 @@ package com.example.notesapp.repositorytest
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.notesapp.domain.Note
+import com.example.notesapp.domain.model.Note
 
 class FakeNoteDataRepostoryImp : NotesRepositroy {
     val list = mutableListOf<Note>()

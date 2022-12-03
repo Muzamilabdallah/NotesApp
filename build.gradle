@@ -3,6 +3,7 @@ buildscript {
         compose_version = '1.2.0-beta02'
         kotlin_version ='1.6.21'
           roomVersion = "2.4.2"
+        hilt_version="2.38.1"
     }
 
     dependencies {

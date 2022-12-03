@@ -5,7 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.notesapp.data.NotesDao
 import com.example.notesapp.data.NotesDatabase
-import com.example.notesapp.domain.Note
+import com.example.notesapp.domain.model.Note
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -31,8 +31,9 @@ class NotesTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    @Named("note_db")
+    @Named("note_db_testing")
     lateinit var notesDatabase: NotesDatabase
+    @Named("testinng_doa")
     lateinit var notesDao: NotesDao
 
     @Before

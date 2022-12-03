@@ -2,8 +2,7 @@ package com.example.notesapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.notesapp.domain.Note
-import kotlinx.coroutines.flow.Flow
+import com.example.notesapp.domain.model.Note
 
 @Dao
 interface NotesDao {
